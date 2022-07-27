@@ -1,0 +1,32 @@
+Ematic SUNXI NAND
+
+I have made been using these tools to modify and customize livesuit images to suit my needs, now I have packed all of them for u to get ur workstations to get ur hands dirty with some ROM editing/making. before u jump right in I must say though allwinner devices are not brickable, but still u may get ur warrenty void,get ur data wiped or miss a trip with ur mama or gf, and for all those reasons Ill not be held liable.
+
+Now, my toolset includes the following - A ROM backup utility that backs up ur BOOT,BOOTLOADER,SYSTEM n RECOVERY, this will be ur starting point if u dont have any stock image.
+
+A blank livesuit image with fake bootloader,boot,system n recovery fex files. which u will have to fill in with ur own stock roms, after u take backup. (if u dont have a stock ROM already.)
+
+Linux tools to help u edit script.bin files and image tools to split boot images, pack or unpack system.fex etc.
+
+The image packing/unpacking program.
+
+
+#### GUIDE ####
+
+Now we have our tools, get started....
+To make stock image :
+1. Get ur fimware dumped using the backup tool.
+2. On a linux pc use the tools in the tools.tar.gz archive to make the dumped system file into a system.fex file by doing the follwing :
+Make a directory called system.
+Unpack the whole system.tgz file which u got from the dump tool inside it.
+run a shell, inside the shell run the make_ext4fs binary and give these arguments [make_ext4fs -s -l 500M -a system {location of the system directory} <filename.fex>] u will get a system.fex file as output.
+3. Now copy the boot.img bootloader.img recovery.img (rename the .img extension to .fex) and the system.fex u made inside the blank livesuit image and replace the nessecary files. And also replace files in the _iso folders. here ull hav to add .iso at the for filename. its pretty simple, just see how the blank files are kept.
+4. Now u can pack the whole directory using the image_repacker program. Fire up runner.bat and put the directory make_stock.img.dump in it. It will generate a stock image of ur tablet. back it up as it will save u from many blunders in future.
+
+Now if u want to modify any other livesuit image what will u do:
+
+Just unpack the tool using the image_repacker program. run the runner.bat file, put the .img file on it(drag n drop) and use the /skip parameter in the options and let it do its work. u will get lots of files. now in a linux machine u can use the simg2img binary to make the system.fex file to a mountable image by using [simg2img <system.fex system.img>]
+now mount it...make a directory called system, type these commands in the shell , [sudo mount -o loop system.img system ] this will mount the system.img inside the folder. now to make life simpler type [sudo nautilus] (on ubuntu) n start the file manager with super user access. n navigate to the system folder. now u can change files,delete unwanted stuff etc. after ur done with it pack the system directory using the make_ext4fs binary,type [ make_ext4fs -s -l 500M -a system {location of the system directory} <filename.fex> ] u will get ur system.fex file which u can pack in a livesuit image and flash.
+
+
+Are you still taking rom backups and working on them? I have an Ematic EGM003 that I have dumped wit the Allwinner tool kit.:D
